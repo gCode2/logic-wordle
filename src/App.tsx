@@ -7,7 +7,8 @@ const INIT_SETTINGS = {
   guesses: 8,
   wordLength: 5,
   guessHistory: [],
-  currentGuess: []
+  currentGuess: [],
+  activeRow: 0
 }
 
 function App() {
@@ -23,9 +24,9 @@ function App() {
       ...prev,
       currentGuess: [...prev.currentGuess, e.key.toUpperCase()]
     }))
+
       
   }
-  console.log(gameState.currentGuess)
   
   useEffect(()=>{
     window.addEventListener("keydown", handleKeyDown);
@@ -47,8 +48,16 @@ function App() {
           </span>
         </section>
         <section className="flex flex-col gap-1">
-          {Array.from(Array(gameState.guesses)).map((wordRow, index)=>(
-            <WordRow key={index} wordLength={gameState.wordLength}/>
+          {Array.from(Array(gameState.guesses)).map((_, index)=>(
+
+            <WordRow 
+              key={index} 
+              wordLength={gameState.wordLength} 
+              guess={
+                index < gameState.activeRow ? gameState.guessHistory[index].guess : index===gameState.activeRow ? gameState.currentGuess : []
+              }
+            />
+
           ))}
         </section>
       </main>
