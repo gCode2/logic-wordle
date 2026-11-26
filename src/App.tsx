@@ -22,7 +22,7 @@ function App() {
             A logic-based, Wordle-inspired word puzzle. Try it out.
           </span>
         </section>
-        <section className="flex flex-col gap-2">
+        <section className="flex flex-col gap-1">
           {Array.from(Array(gameState.guesses)).map((wordRow, index)=>(
             <WordRow key={index} wordLength={gameState.wordLength}/>
           ))}
