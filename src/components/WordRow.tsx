@@ -7,7 +7,7 @@ function WordRow({wordLength}:WordRowProps){
         <div className="flex flex-row gap-1">
             {
                 Array.from(Array(wordLength)).map((letter, index)=>(
-                    <LetterBox/>
+                    <LetterBox key={index}/>
                 ))
             }
             <WordSuggestionRow/>

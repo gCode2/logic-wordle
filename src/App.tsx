@@ -1,15 +1,39 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import WordRow from './components/WordRow';
+import type { GameStateType } from './types/types';
 
 const INIT_SETTINGS = {
   guesses: 8,
   wordLength: 5,
-  guessHistory: []
+  guessHistory: [],
+  currentGuess: []
 }
 
 function App() {
-  const [gameState, setGameState] = useState(INIT_SETTINGS);
+  const [gameState, setGameState] = useState<GameStateType>(INIT_SETTINGS);
+  
+
+  function handleKeyDown(e: KeyboardEvent): void{
+    if(gameState.currentGuess.length >= gameState.wordLength){
+      return;
+    }
+    
+    setGameState(prev=>({
+      ...prev,
+      currentGuess: [...prev.currentGuess, e.key.toUpperCase()]
+    }))
+      
+  }
+  console.log(gameState.currentGuess)
+  
+  useEffect(()=>{
+    window.addEventListener("keydown", handleKeyDown);
+    
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    }
+  }, [gameState])
 
   return (
     <>
